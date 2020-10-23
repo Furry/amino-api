@@ -58,7 +58,7 @@ The app has one API for both the main app & each community, communities have one
 - Chatroom polling
 - Story polling
 - And so much more.
-https://www.buymeacoffee.com/ether
+
 ## PR & Contribution Guidelines
 - All pull requests must provide valid reason for the change / implementation
 - All **CORE CHANGES** require an issue made before the PR will be looked at
