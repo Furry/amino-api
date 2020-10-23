@@ -14,6 +14,7 @@ export class Client extends SocketManager {
 
     public threads: Map<string, Thread> = new Map()
     public users: Map<string, UserProfile> = new Map()
+
     constructor() {
         super();
     }
@@ -44,7 +45,6 @@ export class Client extends SocketManager {
             deviceID: this.deviceID, // genAlphaNum(86)
         })
         if (!response.auid) {
-            console.log(response)
             throw "Error logging in" // Update custom err
         }
         const result = response as UserAccount

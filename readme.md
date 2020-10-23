@@ -19,6 +19,8 @@ If you're looking for a completed library, this is **NOT** it, but is probably t
 
 Additions to this api are added on a random basis, basically whichever I feel should be done first. However, if you're looking for a specific feature, by all means make an issue requesting it and I'll make sure to add it first!
 
+There is **ZERO** Error catching & handling at the moment. If something breaks and you don't know why, please make an issue so I can look into it.
+
 ## What this library offers:
 - A functioning chat-based api
 - Dynamic user fetching
@@ -48,6 +50,7 @@ client.on("message", (message) => {
 The app has one API for both the main app & each community, communities have one app
 
 ## To Implement
+- Error Handling
 - DM thread start capabilities
 - Posting
 - Commenting

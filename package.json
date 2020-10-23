@@ -4,7 +4,8 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "go": "tsc && node ./dist/index.js"
+    "go": "tsc && node ./dist/index.js",
+    "test1": "tsc && node ./dist/tests/chat.js"
   },
   "dependencies": {
     "node-fetch": "^2.6.1",

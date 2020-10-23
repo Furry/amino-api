@@ -44,7 +44,6 @@ export class SocketManager extends EventEmitter {
 
         wsc.on("message", (messagePre: string) => {
             const message = JSON.parse(messagePre);
-            console.log(message)
             switch (message.t) {
                 case 1000:
                     switch(message.o.chatMessage.type) {
@@ -54,7 +53,7 @@ export class SocketManager extends EventEmitter {
                         default: return this.emit("message", new ChatMessage(client, message.o))
                     };
                 default:
-                    console.log(message)
+                    //console.log(message)
             }
         })
     }
