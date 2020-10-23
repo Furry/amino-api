@@ -1,0 +1,5 @@
+Decomp_apk/
+node_modules/
+src/tests/
+dist/
+yarn.lock

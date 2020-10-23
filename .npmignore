@@ -1,0 +1,7 @@
+/src
+/node_modules
+/Decomp_apk
+.gitignore
+tsconfig.json
+readme.md
+yarn.lock
