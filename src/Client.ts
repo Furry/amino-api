@@ -67,5 +67,3 @@ export class Client extends SocketManager {
     }
 
 }
-// cakiva7404@ngo1.com
-// password1234
