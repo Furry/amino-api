@@ -1,6 +1,3 @@
-import { EventEmitter } from "events"
-import WebSocket from "ws"
-
 import { UserAccount } from "./structs/Account"
 import { UserProfile } from "./structs/Profile"
 import { Account } from "./structs/Account"
@@ -44,6 +41,7 @@ export class Client extends SocketManager {
             secret: `0 ${password}`,
             deviceID: this.deviceID, // genAlphaNum(86)
         })
+
         if (!response.auid) {
             throw "Error logging in" // Update custom err
         }
@@ -53,8 +51,8 @@ export class Client extends SocketManager {
         return this.self
     }
 
-    listen() {
-        this.start(this)
+    listen(caching = true) {
+        this.start(this, caching)
     }
 
     async joinCommunity(id: string) {
@@ -70,6 +68,18 @@ export class Client extends SocketManager {
     async searchUsers(query: string, start: number = 0, size: number = 25): Promise<Array<UserProfile>> {
         const res = await this.requestManager.get(`user-profile?type=name&q=${query}&start=${start}&size=${size}`)
         return res.userProfileList.map((user: UserProfile) => new UserProfile(this, user))
+    }
+ 
+    async searchThreads(query: string, start: number = 0, size: number = 25): Promise<Array<Thread>> {
+        const res = await this.requestManager.get(`chat/thread?type=public-keyword&q=${query}&start=${start}&size=${size}`)
+        return res.threadList.map((threaddata: Thread) => new Thread(this, threaddata))
+    }
+
+    //{"backgroundMedia":null,"content":"Test","extensions":{"bm":null,"fansOnly":false,"language":"en"},"latitude":0,"longitude":0,"publishToGlobal":1,"title":"Bot testing","type":2,"userAddedTopicList":[],"icon":"http://pm1.narvii.com/7715/8e1e1bd453219b220533ee94068b001fcb59cd4cr1-640-480v2_00.jpg","address":null,"keywords":null,"inviteeUids":[],"timestamp":1603905011577}
+    async createThread(title: string, icon: string, about: string | null = null, topics: Array<string> = []) {
+        const res = await this.requestManager.post("chat/thread", {
+            
+        })
     }
 
 }

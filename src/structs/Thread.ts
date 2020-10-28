@@ -1,8 +1,20 @@
 import { Client } from "../Client"
 import { ChatMessage } from "./Message"
+import { UserProfile, UserProfilePartial } from "./Profile"
 export class Thread {
     constructor(public client: Client, thread: Thread) {
         Object.assign(this, thread)
+    }
+
+    /**
+     * Checks if a thread is a DM thread or not.
+     */
+    dm(): boolean {
+        if (this.type == 0) {
+            return true
+        } else {
+            return false
+        }
     }
 
     /**
@@ -21,12 +33,12 @@ export class Thread {
     }
 
     /**
-     * Joins the community.
+     * Joins the thread.
      */
-    async join(): Promise<void> {
+    async join() {
         // Perhaps the extra URL parameters specify an amount of messages to cache?
         // https://service.narvii.com/api/v1/x235196899/s/chat/thread/b32d61bc-d261-46c3-b2c4-3cd947d21493/member?start=0&size=100&type=default&cv=1.2
-        await this.client.requestManager.post(`chat/thread/${this.threadId}/member`)
+        return await this.client.requestManager.post(`chat/thread/${this.threadId}/member/${this.client.self.uid}`)
     }
 
     async send(content: string, type = 0, attachment: null = null): Promise<ChatMessage> {
@@ -37,6 +49,21 @@ export class Thread {
             attachedObject: attachment
         })
         return new ChatMessage(this.client, res as any)
+    }
+
+    async invite(user: UserProfilePartial | UserProfile | UserProfile[] | UserProfilePartial[]) {
+        const ids = []
+        if (Array.isArray(user)) {
+            user.forEach((userobj: UserProfile | UserProfilePartial) => {
+                ids.push(userobj.uid)
+            })
+        } else {
+            ids.push(user.uid)
+        }
+        const res = await this.client.requestManager.post(`chat/thread/${this.threadId}/member/invite`, {
+            uids: ids
+        })
+        return res
     }
 }
 

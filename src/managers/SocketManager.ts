@@ -6,10 +6,11 @@ import { EventEmitter } from "events"
 import { ChatMessage } from "../structs/Message"
 
 export interface SocketManagerEvents {
-    "message": (message: ChatMessage) => void,
-    "leave": (message: ChatMessage) => void,
-    "join": (message: ChatMessage) => void,
+    "message": (message: ChatMessage) => void
+    "leave": (message: ChatMessage) => void
+    "join": (message: ChatMessage) => void
     "delete": (message: ChatMessage) => void
+    "ready": () => void
 }
 
 export declare interface SocketManager {
@@ -27,7 +28,7 @@ export class SocketManager extends EventEmitter {
         super()
     }
 
-    start(client: Client) {
+    start(client: Client, caching: boolean) {
         if (!client.self.uid) throw "You must log in to use this feature."
         const wsc = new WebSocket(`wss://ws4.narvii.com/?signbody=010C200EF6EEFF26E8D809B3BF7B644038C3171CA79E831920B62ED4A22FE765AA6C383024D31E9BD1%7C1583100825258`, {
             headers: {
@@ -42,10 +43,14 @@ export class SocketManager extends EventEmitter {
             //wsc.send("heartbeat")
         }, 5000)
 
-        wsc.on("message", (messagePre: string) => {
+        wsc.on("message", async (messagePre: string) => {
             const message = JSON.parse(messagePre);
             switch (message.t) {
                 case 1000:
+                    const msg = new ChatMessage(client, message.o)
+                    if (!client.threads.has(msg.thread.threadId) && caching) {
+                        await msg.thread.recache()
+                    }
                     switch(message.o.chatMessage.type) {
                         case 102: return this.emit("leave", new ChatMessage(client, message.o))
                         case 101: return this.emit("join", new ChatMessage(client, message.o))
@@ -56,5 +61,8 @@ export class SocketManager extends EventEmitter {
                     //console.log(message)
             }
         })
+
+        this.emit("ready")
+
     }
 }
