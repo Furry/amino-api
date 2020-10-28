@@ -61,9 +61,15 @@ export class Client extends SocketManager {
         //const response = 
     }
 
+    // add docs
     async fetchUser(uid: string): Promise<UserProfile> {
         const res = await this.requestManager.get("user-profile/" + uid)
         return new UserProfile(this, res.userProfile)
+    }
+
+    async searchUsers(query: string, start: number = 0, size: number = 25): Promise<Array<UserProfile>> {
+        const res = await this.requestManager.get(`user-profile?type=name&q=${query}&start=${start}&size=${size}`)
+        return res.userProfileList.map((user: UserProfile) => new UserProfile(this, user))
     }
 
 }
