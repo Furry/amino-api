@@ -22,7 +22,7 @@ export class Thread {
      * 
      * @param data The optional thread data to repopulate with.
      */
-    async recache(data?: Thread, type?: "user"): Promise<void> {
+    async recache(data?: Thread): Promise<void> {
         if (data) {
             Object.assign(this, data)
         } else {

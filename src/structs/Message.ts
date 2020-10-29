@@ -3,10 +3,14 @@ import { Thread } from "./Thread"
 import { Client } from "../Client"
 
 export class ChatMessage {
-    constructor(public client: Client, messageRoot: ChatMessageRoot) {
+    constructor(public client: Client, messageRoot: ChatMessageRoot, thread?: Thread) {
         Object.assign(this, messageRoot.chatMessage)
         this.author = new UserProfilePartial(client, this.author)
-        this.thread = new Thread(client, {threadId: this.threadId} as Thread)
+        if (!thread) {
+            this.thread = new Thread(client, {threadId: this.threadId} as Thread)
+        } else {
+            this.thread = thread
+        }
     }
 
     async delete() {

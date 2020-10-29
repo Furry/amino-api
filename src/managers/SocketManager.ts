@@ -4,6 +4,7 @@ import { Client } from "../Client";
 import { EventEmitter } from "events"
 
 import { ChatMessage } from "../structs/Message"
+import { Thread } from "../structs/Thread";
 
 export interface SocketManagerEvents {
     "message": (message: ChatMessage) => void
@@ -47,15 +48,18 @@ export class SocketManager extends EventEmitter {
             const message = JSON.parse(messagePre);
             switch (message.t) {
                 case 1000:
-                    const msg = new ChatMessage(client, message.o)
-                    if (!client.threads.has(msg.thread.threadId) && caching) {
-                        await msg.thread.recache()
+                    if ((!client.threads.has(message.o.chatMessage.threadId) || !client.threads.get(message.o.chatMessage.threadId)?.author) && caching) {
+                        const thread = new Thread(client, { threadId: message.o.chatMessage.threadId } as any)
+                        await thread.recache()
+                        client.threads.set(message.o.chatMessage.threadId, thread)
                     }
+
+                    const msg = new ChatMessage(client, message.o, client.threads.get(message.o.chatMessage.threadId))
                     switch(message.o.chatMessage.type) {
-                        case 102: return this.emit("leave", new ChatMessage(client, message.o))
-                        case 101: return this.emit("join", new ChatMessage(client, message.o))
-                        case 100: return this.emit("delete", new ChatMessage(client, message.o))
-                        default: return this.emit("message", new ChatMessage(client, message.o))
+                        case 102: return this.emit("leave", msg)
+                        case 101: return this.emit("join", msg)
+                        case 100: return this.emit("delete", msg)
+                        default: return this.emit("message", msg)
                     };
                 default:
                     //console.log(message)
