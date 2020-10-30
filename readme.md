@@ -71,6 +71,9 @@ The app has one API for both the main app & each community, communities have one
 - New structures must be defined similarely to how they are in the ./src/structs directory, with the typings below the class.
 - If you have any questions, feel free to make an issue and i'll answer asap!
 
+## PACKAGE NOTICE
+This library name used to belong to https://github.com/amino/amino, a nodejs clustering manager, but ownership has been transfered and this module now represents https://github.com/furry/amino-api
+
 <hr>
 <div style="text-align: center">
 <a href="https://www.buymeacoffee.com/ether" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>

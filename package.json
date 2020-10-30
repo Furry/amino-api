@@ -1,5 +1,5 @@
 {
-  "name": "amino-api",
+  "name": "amino",
   "version": "2.0.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
