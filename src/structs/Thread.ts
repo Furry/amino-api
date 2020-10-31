@@ -1,6 +1,7 @@
 import { Client } from "../Client"
 import { ChatMessage } from "./Message"
 import { UserProfile, UserProfilePartial } from "./Profile"
+
 export class Thread {
     constructor(public client: Client, thread: Thread) {
         Object.assign(this, thread)
@@ -42,7 +43,6 @@ export class Thread {
     }
 
     async send(content: string, type = 0, attachment: null = null): Promise<ChatMessage> {
-        if (!this.client.threads.has(this.threadId)) await this.recache()
         const res = await this.client.requestManager.post(`chat/thread/${this.threadId}/message`, {
             type: type,
             content: content,

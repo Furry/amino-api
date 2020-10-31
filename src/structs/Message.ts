@@ -13,8 +13,27 @@ export class ChatMessage {
         }
     }
 
+    /**
+     * Deletes the message
+     */
     async delete() {
         await this.client.requestManager.delete(`chat/thread/${this.threadId}/message/${this.messageId}`)
+    }
+
+    /**
+     * Replys to a sent message
+     * @param content The message you want to reply with
+     * @param type The message type
+     * @param attachment Attachment raw data
+     */
+    async reply(content: string, type = 0, attachment: null = null) {
+        const res = await this.client.requestManager.post(`chat/thread/${this.threadId}/message`, {
+            type: type,
+            content: content,
+            attachedObject: attachment,
+            replyMessageId: this.messageId
+        })
+        return new ChatMessage(this.client, res as any)
     }
 }
 

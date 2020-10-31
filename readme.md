@@ -9,8 +9,8 @@
 </a>
 
 ![Discord Shield](https://img.shields.io/github/commit-activity/m/furry/amino-api)
-![Size](https://img.shields.io/bundlephobia/min/amino-api)
-![Downloads](https://img.shields.io/npm/dw/amino-api)
+![Size](https://img.shields.io/bundlephobia/min/amino)
+![Downloads](https://img.shields.io/npm/dw/amino)
 
 </div>
 
