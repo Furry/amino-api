@@ -2,32 +2,18 @@
   "name": "amino",
   "version": "2.0.6",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "repository": "https://github.com/furry/amino-api",
+  "author": "A Furry Account <ender@thefluegges.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/furry/amino-api/issues"
-  },
-  "keywords": [
-    "api",
-    "amino",
-    "amino api",
-    "social",
-    "social media"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/furry/amino-api.git"
-  },
   "scripts": {
-    "go": "tsc && node ./dist/index.js",
-    "test1": "tsc && node ./dist/tests/chat.js"
-  },
-  "dependencies": {
-    "node-fetch": "^2.6.1",
-    "ws": "^7.3.1"
+    "go": "tsc && node ./tests/index.js"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.7",
-    "@types/ws": "^7.2.7"
+    "@types/ws": "^7.4.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1",
+    "ws": "^7.4.1"
   }
 }
