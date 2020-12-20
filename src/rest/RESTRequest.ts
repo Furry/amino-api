@@ -29,7 +29,8 @@ import * as Constants from "../utils/Constants"
 const Methods = {
     "THREAD": {
         args: [ String ],
-        returns: Thread
+        returns: Thread,
+        assembly: `chat/thread/{}`
     }
 }
 

@@ -25,7 +25,7 @@ export default class RESTManager {
 
     async request() {
         const request = new RESTRequest(this, "THREAD")
-        request.execute("THREAD", ["E"])
+        request.execute("THREAD", [])
     }
 }
 
